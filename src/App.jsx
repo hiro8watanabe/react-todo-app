@@ -17,12 +17,6 @@ function App() {
     setTodoText("");
   };
 
-  const onClickDelete = (index) => {
-    const newTodos = [...incompleteTodos];
-    newTodos.splice(index, 1);
-    setIncompleteTodos(newTodos);
-  };
-
   const onClickComplete = (index) => {
     const newIncompleteTodos = [...incompleteTodos];
     newIncompleteTodos.splice(index, 1);
@@ -30,6 +24,12 @@ function App() {
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
+  };
+
+  const onClickDelete = (index) => {
+    const newTodos = [...incompleteTodos];
+    newTodos.splice(index, 1);
+    setIncompleteTodos(newTodos);
   };
 
   const onClickReturn = (index) => {
@@ -41,13 +41,23 @@ function App() {
     setIncompleteTodos(newIncompleteTodos);
   };
 
+  const onClickCompleteDelete = (index) => {
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
+    setCompleteTodos(newCompleteTodos);
+  };
+
   return (
     <>
       <AddTodo
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        disabled={incompleteTodos.length >= 5}
       />
+      {incompleteTodos.length >= 5 && (
+        <p style={{ color: "red" }}>登録できるタスクは5個までです。</p>
+      )}
 
       <IncompleteTodos
         todos={incompleteTodos}
@@ -55,7 +65,11 @@ function App() {
         onClickDelete={onClickDelete}
       />
 
-      <CompleteTodos todos={completeTodos} onClickReturn={onClickReturn} />
+      <CompleteTodos
+        todos={completeTodos}
+        onClickReturn={onClickReturn}
+        onClickDelete={onClickCompleteDelete}
+      />
     </>
   );
 }
