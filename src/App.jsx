@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { AddTodo } from "./components/AddTodo";
+import { CompleteTodos } from "./components/CompleteTodos";
+import { IncompleteTodos } from "./components/IncompleteTodos";
 
 function App() {
   const [todoText, setTodoText] = useState("");
@@ -14,7 +17,7 @@ function App() {
     setTodoText("");
   };
 
-  const ocClickDelete = (index) => {
+  const onClickDelete = (index) => {
     const newTodos = [...incompleteTodos];
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
@@ -40,43 +43,19 @@ function App() {
 
   return (
     <>
-      <section>
-        <input type="text" value={todoText} onChange={onChangeTodoText} />
-        <button onClick={() => onClickAdd()}>追加</button>
-      </section>
+      <AddTodo
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickAdd}
+      />
 
-      <section>
-        <h2>タスク</h2>
-        <div>
-          <ul>
-            {incompleteTodos.map((todo, index) => {
-              return (
-                <li key={todo}>
-                  {todo}
-                  <button onClick={() => onClickComplete(index)}>完了</button>
-                  <button onClick={() => ocClickDelete(index)}>削除</button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
+      <IncompleteTodos
+        todos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+      />
 
-      <section>
-        <h2>完了リスト</h2>
-        <div>
-          <ul>
-            {completeTodos.map((todo, index) => {
-              return (
-                <li key={todo}>
-                  {todo}
-                  <button onClick={() => onClickReturn(index)}>戻す</button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
+      <CompleteTodos todos={completeTodos} onClickReturn={onClickReturn} />
     </>
   );
 }
