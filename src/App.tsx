@@ -4,11 +4,12 @@ import { CompleteTodos } from "./components/CompleteTodos";
 import { IncompleteTodos } from "./components/IncompleteTodos";
 
 function App() {
-  const [todoText, setTodoText] = useState("");
-  const [incompleteTodos, setIncompleteTodos] = useState(["aaaa", "eeeee"]);
-  const [completeTodos, setCompleteTodos] = useState(["iiiii"]);
+  const [todoText, setTodoText] = useState<string>("");
+  const [incompleteTodos, setIncompleteTodos] = useState<string[]>([]);
+  const [completeTodos, setCompleteTodos] = useState<string[]>([]);
 
-  const onChangeTodoText = (e) => setTodoText(e.target.value);
+  const onChangeTodoText = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTodoText(e.target.value);
 
   const onClickAdd = () => {
     if (todoText === "") return;
@@ -17,7 +18,7 @@ function App() {
     setTodoText("");
   };
 
-  const onClickComplete = (index) => {
+  const onClickComplete = (index: number) => {
     const newIncompleteTodos = [...incompleteTodos];
     newIncompleteTodos.splice(index, 1);
 
@@ -26,13 +27,13 @@ function App() {
     setCompleteTodos(newCompleteTodos);
   };
 
-  const onClickDelete = (index) => {
+  const onClickDelete = (index: number) => {
     const newTodos = [...incompleteTodos];
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
   };
 
-  const onClickReturn = (index) => {
+  const onClickReturn = (index: number) => {
     const newCompleteTodos = [...completeTodos];
     newCompleteTodos.splice(index, 1);
 
@@ -41,7 +42,7 @@ function App() {
     setIncompleteTodos(newIncompleteTodos);
   };
 
-  const onClickCompleteDelete = (index) => {
+  const onClickCompleteDelete = (index: number) => {
     const newCompleteTodos = [...completeTodos];
     newCompleteTodos.splice(index, 1);
     setCompleteTodos(newCompleteTodos);
